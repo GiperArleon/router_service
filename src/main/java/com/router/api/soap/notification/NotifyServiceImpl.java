@@ -27,7 +27,7 @@ public class NotifyServiceImpl implements NotifyService {
         ArrayList<User> result = new ArrayList<>();
         List<User> users = daoUser.findAllUsers();
         for(User user: users) {
-            List<TimeRecord> records = restAccountantClient.getRecord(user.getId());
+            List<TimeRecord> records = restAccountantClient.getRecords(user.getId());
             if(records.isEmpty()) {
                 result.add(user);
             }

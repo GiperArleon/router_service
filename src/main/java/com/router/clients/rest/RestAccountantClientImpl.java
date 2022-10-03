@@ -7,12 +7,12 @@ import java.util.List;
 
 public class RestAccountantClientImpl implements RestAccountantClient {
     @Override
-    public List<TimeRecord> getRecord(Integer userId) {
-        return getRecord(userId, null, null);
+    public List<TimeRecord> getRecords(Integer userId) {
+        return getRecords(userId, null, null);
     }
 
     @Override
-    public List<TimeRecord> getRecord(Integer userId, ZonedDateTime dateStart, ZonedDateTime dateEnd) {
+    public List<TimeRecord> getRecords(Integer userId, ZonedDateTime dateStart, ZonedDateTime dateEnd) {
         List<TimeRecord> result = new ArrayList<>();
         return result;
     }
