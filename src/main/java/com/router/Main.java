@@ -1,10 +1,7 @@
 package com.router;
 
 import com.router.api.soap.notification.NotifyServiceImpl;
-import com.router.clients.soap.SoapUserClientFactory;
 import lombok.extern.slf4j.Slf4j;
-import ru.soap.teamservice.DaoUser;
-import ru.soap.teamservice.User;
 import javax.xml.ws.Endpoint;
 import static com.router.tools.PropertyReader.PROPERTIES;
 
