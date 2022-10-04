@@ -1,4 +1,4 @@
-package com.router.model;
+package com.router.clients.rest.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

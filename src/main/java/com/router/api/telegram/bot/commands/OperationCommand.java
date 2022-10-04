@@ -1,6 +1,10 @@
 package com.router.api.telegram.bot.commands;
 
 import java.io.*;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.router.clients.rest.model.TimeRecord;
 import lombok.extern.slf4j.Slf4j;
 import com.router.clients.rest.RestAccountantClient;
 import com.router.clients.rest.RestAccountantClientFactory;
@@ -66,5 +70,13 @@ public abstract class OperationCommand extends BotCommand {
 
     protected void sendError(AbsSender absSender, Long chatId, String commandName, String userName) {
         sendAnswer(absSender, chatId, commandName, userName, BOT_ERROR_MESSAGE);
+    }
+
+    protected String getUserRecords(Long userId, Integer days) {
+        List<TimeRecord> records = restAccountantClient.getRecords(userId, days);
+        log.info("records size {} all {}", records.size(), records);
+        return records.stream()
+                .map(t->String.format("%s %d ч %d м", t.getDescription(), t.getHours(), t.getMinutes()))
+                .collect(Collectors.joining("\n"));
     }
 }

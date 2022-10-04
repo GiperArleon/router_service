@@ -38,7 +38,7 @@ public class StartCommand extends ServiceCommand {
                 sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, START_COMMAND);
             }
         } catch(Exception e) {
-            log.info("user not found by telegram id {}, reg mode", user.getId());
+            log.error("error {}", e.toString());
         }
         log.debug("Пользователь {}. Завершено выполнение команды {}", userName, this.getCommandIdentifier());
     }

@@ -5,7 +5,7 @@ import com.router.api.telegram.messager.TelegramMessageSenderFactory;
 import com.router.clients.rest.RestAccountantClient;
 import com.router.clients.rest.RestAccountantClientFactory;
 import com.router.clients.soap.SoapUserClientFactory;
-import com.router.model.TimeRecord;
+import com.router.clients.rest.model.TimeRecord;
 import lombok.extern.slf4j.Slf4j;
 import ru.soap.teamservice.DaoUser;
 import ru.soap.teamservice.User;
@@ -27,7 +27,7 @@ public class NotifyServiceImpl implements NotifyService {
         ArrayList<User> result = new ArrayList<>();
         List<User> users = daoUser.findAllUsers();
         for(User user: users) {
-            List<TimeRecord> records = restAccountantClient.getRecords(user.getId(), days);
+            List<TimeRecord> records = restAccountantClient.getRecords((long)user.getId(), days);
             if(records.isEmpty()) {
                 result.add(user);
             }

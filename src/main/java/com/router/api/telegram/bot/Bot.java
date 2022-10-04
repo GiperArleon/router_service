@@ -1,17 +1,18 @@
 package com.router.api.telegram.bot;
 
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import com.router.api.telegram.bot.commands.service.HelpCommand;
 import com.router.api.telegram.bot.commands.service.StartCommand;
 import com.router.api.telegram.bot.commands.service.WrongCommand;
 import com.router.api.telegram.bot.commands.user.RegCommand;
-import com.router.tools.Utils;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
+import com.router.api.telegram.bot.commands.user.WorkCommand;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import com.router.tools.Utils;
 
 @Slf4j
 @Getter
@@ -28,8 +29,8 @@ public final class Bot extends TelegramLongPollingCommandBot {
 
         register(new StartCommand("start", "Старт"));
         register(new RegCommand("reg", "Регистрация"));
+        register(new WorkCommand("work", "Рабочее время"));
         register(new HelpCommand("help","Помощь"));
-        log.info("Бот создан!");
     }
 
     @Override
@@ -58,8 +59,7 @@ public final class Bot extends TelegramLongPollingCommandBot {
         try {
             execute(answer);
         } catch (TelegramApiException e) {
-            log.error(String.format("Ошибка %s. Сообщение, не являющееся командой. Пользователь: %s", e.getMessage(), userName));
-            e.printStackTrace();
+            log.error(String.format("Ошибка %s. Сообщение, не являющееся командой. Пользователь: %s", e.toString(), userName));
         }
     }
 }

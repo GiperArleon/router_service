@@ -8,8 +8,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @Slf4j
 public abstract class ServiceCommand extends BotCommand {
-
-
     ServiceCommand(String identifier, String description) {
         super(identifier, description);
     }
@@ -22,8 +20,7 @@ public abstract class ServiceCommand extends BotCommand {
         try {
             absSender.execute(message);
         } catch (TelegramApiException e) {
-            log.error("Бот ошибка {}. Команда {}. Пользователь: {}", e.getMessage(), commandName, userName);
-            e.printStackTrace();
+            log.error("Бот ошибка {}. Команда {}. Пользователь: {}", e.toString(), commandName, userName);
         }
     }
 }

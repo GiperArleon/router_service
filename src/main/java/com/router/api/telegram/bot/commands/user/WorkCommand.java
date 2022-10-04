@@ -1,4 +1,64 @@
 package com.router.api.telegram.bot.commands.user;
 
-public class WorkCommand {
+import com.router.api.telegram.bot.commands.OperationCommand;
+import com.router.tools.Utils;
+import lombok.extern.slf4j.Slf4j;
+import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.api.objects.User;
+import org.telegram.telegrambots.meta.bots.AbsSender;
+import ru.soap.teamservice.FindUserByTelegramId;
+import ru.soap.teamservice.FindUserByTelegramIdResponse;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import static com.router.api.telegram.bot.BotTextConstants.*;
+import static com.router.tools.Utils.getUserName;
+
+@Slf4j
+public class WorkCommand extends OperationCommand {
+
+    public static final int MAX_PARAMS = 3;
+
+    public WorkCommand(String identifier, String description) {
+        super(identifier, description);
+    }
+
+    @Override
+    public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
+        String userName = getUserName(user);
+        log.debug("Пользователь {}. Начато выполнение команды {}", userName, this.getCommandIdentifier());
+        log.info("команда {} пользователь {}", this.getCommandIdentifier(), Utils.getUserFullDescription(user));
+
+        if(strings.length < MAX_PARAMS) {
+            log.error("wrong parameters:");
+            for(String str: strings)
+                log.error(str);
+            sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, BOT_ERROR_WORK_WRONG_PARAMS);
+            return;
+        }
+
+        try {
+            FindUserByTelegramId findUserByTelegramId = new FindUserByTelegramId();
+            findUserByTelegramId.setUserTelegramLogin(user.getId().toString());
+            FindUserByTelegramIdResponse response = daoUser.findUserByTelegramId(findUserByTelegramId);
+            ru.soap.teamservice.User userRecord = response.getReturn();
+
+            if(userRecord == null) {
+                log.info("user not found by telegram id {} need to reg first", user.getId());
+                sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, START_COMMAND);
+                return;
+            }
+
+            String message = Arrays.stream(strings)
+              .skip(2)
+              .collect(Collectors.joining(" "));
+
+            restAccountantClient.postRecord(userRecord.getId(), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), message);
+            sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, "успешно, дела за сегодня\n" + getUserRecords((long)userRecord.getId(), 0));
+        } catch(Exception e) {
+            log.error("error {}", e.toString());
+            sendError(absSender, chat.getId(), this.getCommandIdentifier(), userName);
+        }
+        log.debug("Пользователь {}. Завершено выполнение команды {}", userName, this.getCommandIdentifier());
+    }
 }
+

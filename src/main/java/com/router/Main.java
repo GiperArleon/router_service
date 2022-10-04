@@ -18,7 +18,7 @@ public class Main {
         log.info("* * *");
         PROPERTIES
                 .getProperties()
-                .forEach((key, value) -> log.info("{} = {}", key, value));
+                .forEach((key, value) -> log.debug("{} = {}", key, value));
 
         Endpoint endpoint = Endpoint.create(new NotifyServiceImpl());
         endpoint.publish("http://localhost:8066/notification");

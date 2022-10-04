@@ -1,6 +1,6 @@
 package com.router.clients.rest;
 
-import com.router.model.TimeRecord;
+import com.router.clients.rest.model.TimeRecord;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.URI;
@@ -10,8 +10,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.router.clients.rest.RestRequestUrls.GET_USER_RECORDS_URL;
-import static com.router.clients.rest.RestRequestUrls.POST_USER_URL;
+import static com.router.clients.rest.RestRequestUrls.*;
 
 @Slf4j
 public class RestRequestHandler {
@@ -23,7 +22,7 @@ public class RestRequestHandler {
         this.jsonParser = new JsonParser();
     }
 
-    public List<TimeRecord> getUserRecords(Integer userId, Integer days) {
+    public List<TimeRecord> getUserRecords(Long userId, Integer days) {
         HttpResponse<String> response;
         List<TimeRecord> result = new ArrayList<>();
         String urlStr = String.format(GET_USER_RECORDS_URL, userId, days);
@@ -36,7 +35,7 @@ public class RestRequestHandler {
 
             if(response.statusCode() == 200) {
                 log.debug("got response code {} body {}", response.statusCode(), response.body());
-                result = jsonParser.getListOfObjectsFromJson(response.body());        //getResponseEntity(response.body(), List<TimeRecord>.class);
+                result = jsonParser.getListOfObjectsFromJson(response.body());
                 log.debug("parsing result: {}", result);
             } else {
                 log.error("wrong response code = {}", response.statusCode());
@@ -47,13 +46,14 @@ public class RestRequestHandler {
         return result;
     }
 
-    public void postUserRecord(String jsonUser) {
+    public void postUserRecord(Integer user, Integer hours, Integer minutes, String description) {
         HttpResponse<String> response;
+        String jsonUser = String.format(POST_USER_BODY, user, description, hours, minutes);
         try {
             log.debug("send post rest request {} body {}", POST_USER_URL, jsonUser);
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(POST_USER_URL))
-                    .POST(HttpRequest.BodyPublishers.ofString(jsonUser)) //HttpRequest.BodyPublishers.noBody()
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonUser))
                     .build();
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
