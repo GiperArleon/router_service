@@ -31,8 +31,10 @@ public class PropertyReader {
                 log.error(tmp);
                 throw new FileNotFoundException(tmp);
             }
-
             properties.put("accountant.server.url", prop.getProperty("accountant.server.url"));
+            properties.put("telegram.api.url", prop.getProperty("telegram.api.url"));
+            properties.put("telegram.api.user", prop.getProperty("telegram.api.user"));
+            properties.put("telegram.api.token", prop.getProperty("telegram.api.token"));
         } catch(IOException e) {
             log.error("Exception: " + e.toString());
         }

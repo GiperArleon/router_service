@@ -20,4 +20,8 @@ public class RestAccountantClientImpl implements RestAccountantClient {
         }
         return result;
     }
+
+    @Override
+    public void postRecord(String description, String hours, String minutes) {
+    }
 }
