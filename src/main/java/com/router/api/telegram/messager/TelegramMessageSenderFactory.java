@@ -9,7 +9,7 @@ public class TelegramMessageSenderFactory {
     private TelegramMessageSenderFactory() {
     }
 
-    public static TelegramMessageSender GetTelegramMessageSender() {
+    public static TelegramMessageSender getTelegramMessageSender() {
         if(instance == null) {
             try {
                 instance = new TelegramMessageSender();

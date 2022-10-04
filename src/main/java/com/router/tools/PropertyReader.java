@@ -32,8 +32,7 @@ public class PropertyReader {
                 throw new FileNotFoundException(tmp);
             }
 
-            properties.put("some.test.param1", prop.getProperty("some.test.param1"));
-            properties.put("some.test.param2", prop.getProperty("some.test.param2"));
+            properties.put("accountant.server.url", prop.getProperty("accountant.server.url"));
         } catch(IOException e) {
             log.error("Exception: " + e.toString());
         }

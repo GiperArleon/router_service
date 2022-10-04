@@ -17,9 +17,9 @@ import java.util.List;
 @WebService(endpointInterface = "com.router.api.soap.notification.NotifyService")
 public class NotifyServiceImpl implements NotifyService {
 
-    TelegramMessageSender telegramMessageSender = TelegramMessageSenderFactory.GetTelegramMessageSender();
-    DaoUser daoUser = SoapUserClientFactory.GetSoapUserClient();
-    RestAccountantClient restAccountantClient = RestAccountantClientFactory.GetRestAccountantClient();
+    TelegramMessageSender telegramMessageSender = TelegramMessageSenderFactory.getTelegramMessageSender();
+    DaoUser daoUser = SoapUserClientFactory.getSoapUserClient();
+    RestAccountantClient restAccountantClient = RestAccountantClientFactory.getRestAccountantClient();
 
     @Override
     public ArrayList<User> getUsersWithoutTracks(Integer days) {
@@ -27,7 +27,7 @@ public class NotifyServiceImpl implements NotifyService {
         ArrayList<User> result = new ArrayList<>();
         List<User> users = daoUser.findAllUsers();
         for(User user: users) {
-            List<TimeRecord> records = restAccountantClient.getRecords(user.getId());
+            List<TimeRecord> records = restAccountantClient.getRecords(user.getId(), days);
             if(records.isEmpty()) {
                 result.add(user);
             }

@@ -34,6 +34,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.24</version>
@@ -84,6 +90,12 @@
             <version>4.5.1</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.13</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -127,7 +139,9 @@
                 <version>2.6</version>
                 <configuration>
                     <wsdlUrls>
-                        <url>http://localhost:9898/team1?wsdl</url>
+                        <url>http://localhost:9898/Users?wsdl</url>
+                        <url>http://localhost:9898/Roles?wsdl</url>
+                        <url>http://localhost:9898/Groups?wsdl</url>
                     </wsdlUrls>
                     <packageName>ru.soap.teamservice</packageName>
                     <keep>true</keep>

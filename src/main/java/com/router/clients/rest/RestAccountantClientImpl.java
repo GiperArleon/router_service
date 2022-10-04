@@ -1,19 +1,23 @@
 package com.router.clients.rest;
 
 import com.router.model.TimeRecord;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
+import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 
+@Slf4j
 public class RestAccountantClientImpl implements RestAccountantClient {
-    @Override
-    public List<TimeRecord> getRecords(Integer userId) {
-        return getRecords(userId, null, null);
+    private final RestRequestHandler restRequestHandler;
+
+    RestAccountantClientImpl(RestRequestHandler restRequestHandler) {
+        this.restRequestHandler = restRequestHandler;
     }
 
     @Override
-    public List<TimeRecord> getRecords(Integer userId, ZonedDateTime dateStart, ZonedDateTime dateEnd) {
-        List<TimeRecord> result = new ArrayList<>();
+    public List<TimeRecord> getRecords(Integer userId, Integer days) {
+        List<TimeRecord> result = restRequestHandler.getUserRecords(userId, days);
+        for(TimeRecord timeRecord: result) {
+            log.debug("{} {} {} {} {} {}", timeRecord.getId(), timeRecord.getUserId(), timeRecord.getDate(), timeRecord.getHours(), timeRecord.getMinutes(), timeRecord.getDescription());
+        }
         return result;
     }
 }

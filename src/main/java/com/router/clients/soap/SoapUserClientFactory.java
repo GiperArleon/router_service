@@ -13,10 +13,10 @@ public class SoapUserClientFactory {
     private SoapUserClientFactory() {
     }
 
-    public static DaoUser GetSoapUserClient() {
+    public static DaoUser getSoapUserClient() {
         if(instance == null) {
             try {
-                URL url = new URL("http://localhost:9898/team1?wsdl");
+                URL url = new URL("http://localhost:9898/Users?wsdl");
                 DaoUserImplService daoUserImplService = new DaoUserImplService(url);
                 instance = daoUserImplService.getDaoUserImplPort();
             } catch(MalformedURLException e) {
