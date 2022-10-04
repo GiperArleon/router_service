@@ -51,7 +51,7 @@ public abstract class OperationCommand extends BotCommand {
         return document;
     }
 
-    private void sendAnswer(AbsSender absSender, Long chatId, String commandName, String userName, String message) {
+    protected void sendAnswer(AbsSender absSender, Long chatId, String commandName, String userName, String message) {
         try {
             absSender.execute(new SendMessage(chatId.toString(), message));
         } catch (TelegramApiException e) {

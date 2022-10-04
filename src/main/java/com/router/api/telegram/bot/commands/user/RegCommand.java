@@ -6,8 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
+import ru.soap.teamservice.FindUserByTelegramId;
+import ru.soap.teamservice.FindUserByTelegramIdResponse;
 import ru.soap.teamservice.Group;
 import ru.soap.teamservice.Role;
+
+import static com.router.api.telegram.bot.BotTextConstants.*;
 import static com.router.tools.Utils.getUserName;
 
 @Slf4j
@@ -23,35 +27,49 @@ public class RegCommand extends OperationCommand {
         log.debug("Пользователь {}. Начато выполнение команды {}", userName, this.getCommandIdentifier());
         log.info("команда {} пользователь {}", this.getCommandIdentifier(), Utils.getUserFullDescription(user));
 
-        if(strings.length<2) {
+        if(strings.length < 2) {
             log.error("wrong parameters:");
             for(String str: strings)
                 log.error(str);
-            sendError(absSender, chat.getId(), this.getCommandIdentifier(), userName);
+            sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, BOT_ERROR_REG_WRONG_PARAMS);
+            return;
         }
 
-        Group group = new Group();
-        group.setGId(1);
-        group.setGroup("some group");
+        try {
+            FindUserByTelegramId findUserByTelegramId = new FindUserByTelegramId();
+            findUserByTelegramId.setUserTelegramLogin(user.getId().toString());
+            FindUserByTelegramIdResponse response = daoUser.findUserByTelegramId(findUserByTelegramId);
+            ru.soap.teamservice.User userRecord = response.getReturn();
+            if(userRecord != null) {
+                log.info("user {} found by telegram id {} work mode", userRecord.getUsername(), user.getId());
+                sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, WORK_COMMAND);
+            } else {
+                Group group = new Group();
+                group.setGId(1);
+                group.setGroup("some group");
 
-        Role role = new Role();
-        role.setRId(3);
-        role.setRoleName("lector");
+                Role role = new Role();
+                role.setRId(3);
+                role.setRoleName("lector");
 
-        ru.soap.teamservice.User userRecord = new ru.soap.teamservice.User();
-        userRecord.setUsername(strings[0]);
-        userRecord.setLogin(strings[0]);
-        userRecord.setSurname(strings[1]);
-        userRecord.setGroup(group);
-        userRecord.setPhone(strings[1]);
-        userRecord.setRole(role);
-        userRecord.setTelegramId(user.getId());
-        userRecord.setTelegramUser(getUserName(user));
+                ru.soap.teamservice.User userR = new ru.soap.teamservice.User();
+                userR.setUsername(strings[0]);
+                userR.setLogin(strings[0]);
+                userR.setSurname(strings[1]);
+                userR.setGroup(group);
+                userR.setPhone(strings[1]);
+                userR.setRole(role);
+                userR.setTelegramId(user.getId());
+                userR.setTelegramUser(getUserName(user));
 
-        if(daoUser.saveUser(userRecord)) {
-            sendOK(absSender, chat.getId(), this.getCommandIdentifier(), userName);
-        } else {
-            sendError(absSender, chat.getId(), this.getCommandIdentifier(), userName);
+                if(daoUser.saveUser(userRecord)) {
+                    sendOK(absSender, chat.getId(), this.getCommandIdentifier(), userName);
+                } else {
+                    sendError(absSender, chat.getId(), this.getCommandIdentifier(), userName);
+                }
+            }
+        } catch(Exception e) {
+            log.info("user not found by telegram id {}, reg mode", user.getId());
         }
         log.debug("Пользователь {}. Завершено выполнение команды {}", userName, this.getCommandIdentifier());
     }

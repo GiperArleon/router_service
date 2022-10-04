@@ -7,6 +7,7 @@ public class BotTextConstants {
     public static final String BOT_STARTED_MESSAGE = "TimeTracker бот запущен.\nСтарт по команде /start";
     public static final String BOT_OK_MESSAGE = "Успешно выполнено";
     public static final String BOT_ERROR_MESSAGE = "Произошла ошибка";
+    public static final String BOT_ERROR_REG_WRONG_PARAMS = "Проверьте параметры\n/reg Имя Фамилия\n/reg Иван Иванов";
 
     public static final String HELP =
             "Бот учета времени\n\n" +
