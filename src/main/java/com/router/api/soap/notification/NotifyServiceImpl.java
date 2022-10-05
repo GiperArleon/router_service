@@ -12,6 +12,7 @@ import ru.soap.teamservice.DaoUser;
 import ru.soap.teamservice.User;
 import javax.jws.WebService;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -23,7 +24,7 @@ public class NotifyServiceImpl implements NotifyService {
     RestAccountantClient restAccountantClient = RestAccountantClientFactory.getRestAccountantClient();
 
     @Override
-    public ArrayList<User> getUsersWithoutTracks(Integer days) {
+    public User[] getUsersWithoutTracks(Integer days) {
         log.debug("getUsersWithoutTracks called");
         ArrayList<User> result = new ArrayList<>();
         List<User> users = daoUser.findAllUsers();
@@ -33,7 +34,7 @@ public class NotifyServiceImpl implements NotifyService {
                 result.add(user);
             }
         }
-        return result;
+        return result.toArray(new User[0]);
     }
 
     @Override

@@ -26,8 +26,8 @@ public class Main {
             endpoint.publish("http://localhost:8066/notification");
 
             NotifyServiceImpl notifyService = new NotifyServiceImpl();
-            List<User> result = notifyService.getUsersWithoutTracks(6);
-            log.debug("users without records: {}", result.size());
+            User[] result = notifyService.getUsersWithoutTracks(6);
+            log.debug("users without records: {}", result.length);
 
             String BOT_NAME = PROPERTIES.getProperties().get("telegram.api.user");
             String BOT_TOKEN = PROPERTIES.getProperties().get("telegram.api.token");
