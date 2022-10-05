@@ -31,7 +31,7 @@ public class StartCommand extends ServiceCommand {
             findUserByTelegramId.setUserTelegramLogin(user.getId().toString());
             FindUserByTelegramIdResponse response = daoUser.findUserByTelegramId(findUserByTelegramId);
             ru.soap.teamservice.User userRecord = response.getReturn();
-            if(userRecord != null) {
+            if(userRecord != null && userRecord.getUsername() != null) {
                 log.info("user {} found by telegram id {} work mode", userRecord.getUsername(), user.getId());
                 sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, WORK_COMMAND);
             } else {

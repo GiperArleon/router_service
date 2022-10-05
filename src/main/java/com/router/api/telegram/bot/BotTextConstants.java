@@ -4,6 +4,7 @@ public class BotTextConstants {
     public static final String WRONG_COMMAND = "Сообщение, не соответствующее формату\nВсе команды /help";
     public static final String START_COMMAND = "Сначала нужно зарегистрироваться\n/reg Имя Фамилия\n/reg Иван Иванов\nВсе команды /help";
     public static final String WORK_COMMAND = "Вы уже зарегестрированы!\nВводите рабочее время\n/work часы минуты описание\n/work 3 20 мыл посуду\n/help все команды";
+    public static final String SUCCESS_REG_COMMAND = "Регистрация успешна!\nВводите рабочее время\n/work часы минуты описание\n/work 3 20 мыл посуду";
     public static final String BOT_STARTED_MESSAGE = "TimeTracker бот запущен.\nСтарт по команде /start";
     public static final String BOT_OK_MESSAGE = "Успешно выполнено";
     public static final String BOT_ERROR_MESSAGE = "Произошла ошибка";

@@ -43,14 +43,14 @@ public class RegCommand extends OperationCommand {
             FindUserByTelegramIdResponse response = daoUser.findUserByTelegramId(findUserByTelegramId);
             ru.soap.teamservice.User userRecord = response.getReturn();
 
-            if(userRecord != null) {
+            if(userRecord != null && userRecord.getUsername() != null) {
                 log.info("user {} found by telegram id {} work mode", userRecord.getUsername(), user.getId());
                 sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, WORK_COMMAND);
                 return;
             }
 
             Group group = new Group();
-            group.setGId(1);
+            group.setGId(0);
             group.setGroup("some group");
 
             Role role = new Role();
@@ -67,8 +67,8 @@ public class RegCommand extends OperationCommand {
             userR.setTelegramId(user.getId());
             userR.setTelegramUser(getUserName(user));
 
-            if(daoUser.saveUser(userRecord)) {
-                sendOK(absSender, chat.getId(), this.getCommandIdentifier(), userName);
+            if(daoUser.saveUser(userR)) {
+                sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, SUCCESS_REG_COMMAND);
             } else {
                 sendError(absSender, chat.getId(), this.getCommandIdentifier(), userName);
             }
