@@ -6,22 +6,22 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-import static com.router.api.telegram.bot.BotTextConstants.BOT_STARTED_MESSAGE;
+import static com.router.tools.PropertyReader.PROPERTIES;
 
 @Slf4j
 public class TelegramNotifier {
 
-    public void sendHello(String CHAT_ID, String TOKEN) {
+    public boolean sendMessage(String CHAT_ID, String TOKEN, String message) {
         HttpClient client = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(5))
                 .version(HttpClient.Version.HTTP_2)
                 .build();
 
         UriBuilder builder = UriBuilder
-                .fromUri("https://api.telegram.org")
+                .fromUri(PROPERTIES.getProperties().get("telegram.api.url"))
                 .path("/{token}/sendMessage")
                 .queryParam("chat_id", CHAT_ID)
-                .queryParam("text", BOT_STARTED_MESSAGE);
+                .queryParam("text", message);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
@@ -32,8 +32,10 @@ public class TelegramNotifier {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             log.debug("TelegramNotifier response {} body {}", response.statusCode(), response.body());
+            return response.statusCode() == 200;
         } catch(Exception ex) {
             log.error("ex {}", ex.getMessage());
         }
+        return false;
     }
 }

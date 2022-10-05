@@ -6,6 +6,7 @@ import com.router.clients.rest.RestAccountantClient;
 import com.router.clients.rest.RestAccountantClientFactory;
 import com.router.clients.soap.SoapUserClientFactory;
 import com.router.clients.rest.model.TimeRecord;
+import com.router.clients.soap.UserRoles;
 import lombok.extern.slf4j.Slf4j;
 import ru.soap.teamservice.DaoUser;
 import ru.soap.teamservice.User;
@@ -36,14 +37,26 @@ public class NotifyServiceImpl implements NotifyService {
     }
 
     @Override
-    public boolean sendNotificationToLead(String message) {
+    public boolean sendNotificationToLeads(String message) {
         log.debug("sendNotificationToLead called");
-        return telegramMessageSender.sendNotificationToLead(message);
+        List<User> users = daoUser.findAllUsers();
+        for(User user: users) {
+            if(user.getRole().getRId()>= UserRoles.LEAD.ordinal()) {
+                telegramMessageSender.sendNotificationById(String.valueOf(user.getTelegramId()), message);
+            }
+        }
+        return true;
     }
 
     @Override
-    public boolean sendNotificationToLector(String message) {
+    public boolean sendNotificationToLectors(String message) {
         log.debug("sendNotificationToLector called");
-        return telegramMessageSender.sendNotificationToLector(message);
+        List<User> users = daoUser.findAllUsers();
+        for(User user: users) {
+            if(user.getRole().getRId()>= UserRoles.LECTOR.ordinal()) {
+                telegramMessageSender.sendNotificationById(String.valueOf(user.getTelegramId()), message);
+            }
+        }
+        return true;
     }
 }

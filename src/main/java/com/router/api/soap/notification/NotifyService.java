@@ -14,9 +14,9 @@ public interface NotifyService {
     ArrayList<User> getUsersWithoutTracks(Integer days);
 
     @WebMethod
-    boolean sendNotificationToLead(String message);
+    boolean sendNotificationToLeads(String message);
 
     @WebMethod
-    boolean sendNotificationToLector(String message);
+    boolean sendNotificationToLectors(String message);
 }
 

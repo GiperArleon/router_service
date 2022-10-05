@@ -14,8 +14,10 @@ public class BotTextConstants {
     public static final String HELP =
             "Бот учета времени\n\n" +
             "*Список команд*\n" +
+            "\uD83D\uDC49/start - начало работы\n" +
+            "\uD83D\uDC49/show - показать дела за сегодня\n" +
+            "\uD83D\uDC49/help - помощь\n\n" +
             "\uD83D\uDC49/reg - регистрация\n     /reg Иван Иванов\n" +
             "\uD83D\uDC49/work - ввод времени\n     /work 2 30 мыл посуду\n" +
-            "\uD83D\uDC49/help - помощь\n\n" +
             "❗*Успей до 21:59* \uD83D\uDE42";
 }

@@ -1,4 +1,4 @@
-package com.router.api.telegram.bot.commands.service;
+package com.router.api.telegram.bot.commands;
 
 import lombok.extern.slf4j.Slf4j;
 import static com.router.api.telegram.bot.BotTextConstants.WRONG_COMMAND;

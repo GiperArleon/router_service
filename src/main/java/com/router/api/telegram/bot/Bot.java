@@ -1,10 +1,11 @@
 package com.router.api.telegram.bot;
 
+import com.router.api.telegram.bot.commands.user.ShowCommand;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import com.router.api.telegram.bot.commands.service.HelpCommand;
 import com.router.api.telegram.bot.commands.service.StartCommand;
-import com.router.api.telegram.bot.commands.service.WrongCommand;
+import com.router.api.telegram.bot.commands.WrongCommand;
 import com.router.api.telegram.bot.commands.user.RegCommand;
 import com.router.api.telegram.bot.commands.user.WorkCommand;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
@@ -30,6 +31,7 @@ public final class Bot extends TelegramLongPollingCommandBot {
         register(new StartCommand("start", "Старт"));
         register(new RegCommand("reg", "Регистрация"));
         register(new WorkCommand("work", "Рабочее время"));
+        register(new ShowCommand("show","Дела"));
         register(new HelpCommand("help","Помощь"));
     }
 

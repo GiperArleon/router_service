@@ -1,5 +1,6 @@
 package com.router.api.telegram.bot.commands.service;
 
+import com.router.api.telegram.bot.commands.ServiceCommand;
 import com.router.clients.soap.SoapUserClientFactory;
 import com.router.tools.Utils;
 import lombok.extern.slf4j.Slf4j;

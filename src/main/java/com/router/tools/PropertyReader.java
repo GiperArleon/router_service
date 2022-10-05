@@ -35,6 +35,7 @@ public class PropertyReader {
             properties.put("telegram.api.url", prop.getProperty("telegram.api.url"));
             properties.put("telegram.api.user", prop.getProperty("telegram.api.user"));
             properties.put("telegram.api.token", prop.getProperty("telegram.api.token"));
+            properties.put("telegram.developer.id", prop.getProperty("telegram.developer.id"));
         } catch(IOException e) {
             log.error("Exception: " + e.toString());
         }
