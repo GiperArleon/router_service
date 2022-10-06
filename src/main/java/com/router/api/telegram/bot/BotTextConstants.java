@@ -21,6 +21,7 @@ public class BotTextConstants {
             "\uD83D\uDC49/reg - регистрация\n     /reg Иван Иванов\n" +
             "\uD83D\uDC49/work - ввод времени\n     /work 2 30 мыл посуду\n" +
             "\uD83D\uDC49/notify N проверки\n     /notify 1     \n     /notify 3\n" +
-            "\uD83D\uDC49/report - сформировать отчет за сегодня\n" +
+            "\uD83D\uDC49/report - отчет за сегодня\n" +
+            "\uD83D\uDC49/report pdf - отчет за сегодня в pdf\n" +
             "❗*Успей до 21:59* \uD83D\uDE42";
 }

@@ -37,7 +37,7 @@ public class SenderServiceImpl implements SenderService {
 
     @Override
     public boolean sendTxtReportToLectors(String report) {
-        log.debug("sendTxtReportToLectors called");
+        log.info("sendTxtReportToLectors called");
         List<User> users = daoUser.findAllUsers();
         for(User user: users) {
             if(user.getRole().getRId()>= UserRoles.LECTOR.ordinal()) {
@@ -49,7 +49,7 @@ public class SenderServiceImpl implements SenderService {
 
     @Override
     public boolean sendPdfReportToLectors(String report) {
-        log.debug("sendPdfReportToLectors called");
+        log.info("sendPdfReportToLectors called");
         List<User> users = daoUser.findAllUsers();
         for(User user: users) {
             if(user.getRole().getRId()>= UserRoles.LECTOR.ordinal()) {

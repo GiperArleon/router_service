@@ -10,6 +10,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.soap.teamservice.FindUserByTelegramId;
 import ru.soap.teamservice.FindUserByTelegramIdResponse;
 import ru.soap.teamservice.SenderReportService;
+
 import static com.router.api.telegram.bot.BotTextConstants.START_COMMAND;
 import static com.router.tools.Utils.getUserName;
 
@@ -35,7 +36,10 @@ public class SendReportCommand extends OperationCommand {
             ru.soap.teamservice.User userRecord = response.getReturn();
 
             if(userRecord != null && userRecord.getUsername() != null) {
-                senderReportService.sendReportToLectors();
+                if(strings.length == 1 && strings[0].equals("pdf"))
+                    senderReportService.sendPdfReportToLectors();
+                else
+                    senderReportService.sendReportToLectors();
             } else {
                 log.info("user not found by telegram id {} need to reg first", user.getId());
                 sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, START_COMMAND);
