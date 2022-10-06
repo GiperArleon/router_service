@@ -161,6 +161,8 @@
                         <url>http://localhost:9898/Users?wsdl</url>
                         <url>http://localhost:9898/Roles?wsdl</url>
                         <url>http://localhost:9898/Groups?wsdl</url>
+                        <url>http://localhost:8033/notification?wsdl</url>
+                        <url>http://localhost:8044/reports?wsdl</url>
                     </wsdlUrls>
                     <packageName>ru.soap.teamservice</packageName>
                     <keep>true</keep>

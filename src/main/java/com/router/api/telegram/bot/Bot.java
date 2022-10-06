@@ -1,5 +1,7 @@
 package com.router.api.telegram.bot;
 
+import com.router.api.telegram.bot.commands.admin.CheckNoTracksCommand;
+import com.router.api.telegram.bot.commands.admin.SendReportCommand;
 import com.router.api.telegram.bot.commands.user.ShowCommand;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +34,8 @@ public final class Bot extends TelegramLongPollingCommandBot {
         register(new RegCommand("reg", "Регистрация"));
         register(new WorkCommand("work", "Рабочее время"));
         register(new ShowCommand("show","Дела"));
+        register(new CheckNoTracksCommand("notify","Проверка пользователей без треков времени"));
+        register(new SendReportCommand("report","Отчет треков времени"));
         register(new HelpCommand("help","Помощь"));
     }
 

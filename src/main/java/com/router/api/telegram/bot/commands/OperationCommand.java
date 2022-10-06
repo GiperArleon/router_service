@@ -74,7 +74,7 @@ public abstract class OperationCommand extends BotCommand {
 
     protected String getUserRecords(Long userId, Integer days) {
         List<TimeRecord> records = restAccountantClient.getRecords(userId, days);
-        log.info("records size {} all {}", records.size(), records);
+        log.debug("records size {} all {}", records.size(), records);
         return records.stream()
                 .map(t->String.format("%s %d ч %d м", t.getDescription(), t.getHours(), t.getMinutes()))
                 .collect(Collectors.joining("\n"));

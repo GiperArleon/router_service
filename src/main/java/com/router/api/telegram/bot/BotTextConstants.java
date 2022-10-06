@@ -10,14 +10,17 @@ public class BotTextConstants {
     public static final String BOT_ERROR_MESSAGE = "Произошла ошибка";
     public static final String BOT_ERROR_REG_WRONG_PARAMS = "Проверьте параметры\n/reg Имя Фамилия\n/reg Иван Иванов";
     public static final String BOT_ERROR_WORK_WRONG_PARAMS = "Проверьте параметры\n/work часы минуты описание\n/work 3 20 мыл посуду";
+    public static final String BOT_ERROR_CHECK_WRONG_PARAMS = "Проверьте параметры\n/notify N проверки\n/notify 1\n/notify 3";
 
     public static final String HELP =
             "Бот учета времени\n\n" +
             "*Список команд*\n" +
             "\uD83D\uDC49/start - начало работы\n" +
             "\uD83D\uDC49/show - показать дела за сегодня\n" +
-            "\uD83D\uDC49/help - помощь\n\n" +
+            "\uD83D\uDC49/help - помощь\n" +
             "\uD83D\uDC49/reg - регистрация\n     /reg Иван Иванов\n" +
             "\uD83D\uDC49/work - ввод времени\n     /work 2 30 мыл посуду\n" +
+            "\uD83D\uDC49/notify N проверки\n     /notify 1     \n     /notify 3\n" +
+            "\uD83D\uDC49/report - сформировать отчет за сегодня\n" +
             "❗*Успей до 21:59* \uD83D\uDE42";
 }
