@@ -2,6 +2,7 @@ package com.router.api.telegram.bot.commands.admin;
 
 import com.router.api.telegram.bot.commands.OperationCommand;
 import com.router.clients.sender.SoapSenderClientFactory;
+import com.router.clients.soap.UserRoles;
 import com.router.tools.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Chat;
@@ -11,6 +12,7 @@ import ru.soap.teamservice.FindUserByTelegramId;
 import ru.soap.teamservice.FindUserByTelegramIdResponse;
 import ru.soap.teamservice.SenderReportService;
 
+import static com.router.api.telegram.bot.BotTextConstants.NOT_ENOUGH_RIGHTS;
 import static com.router.api.telegram.bot.BotTextConstants.START_COMMAND;
 import static com.router.tools.Utils.getUserName;
 
@@ -36,6 +38,12 @@ public class SendReportCommand extends OperationCommand {
             ru.soap.teamservice.User userRecord = response.getReturn();
 
             if(userRecord != null && userRecord.getUsername() != null) {
+                if(userRecord.getRole().getRId()< UserRoles.LEAD.ordinal()) {
+                    log.info("user with telegram id {} do not have enough rights to get reports", user.getId());
+                    sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, NOT_ENOUGH_RIGHTS);
+                    return;
+                }
+
                 if(strings.length == 1 && strings[0].equals("pdf"))
                     senderReportService.sendPdfReportToLectors();
                 else

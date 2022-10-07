@@ -46,7 +46,14 @@ public class WorkCommand extends OperationCommand {
                 String message = Arrays.stream(strings)
                         .skip(2)
                         .collect(Collectors.joining(" "));
-                restAccountantClient.postRecord(userRecord.getId(), Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), message);
+                Integer hours = Integer.parseInt(strings[0]);
+                Integer minutes = Integer.parseInt(strings[1]);
+                String res = Utils.validateTime(hours, minutes);
+                if(!res.equals(VALIDATOR_OK)) {
+                    sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, res);
+                    return;
+                }
+                restAccountantClient.postRecord(userRecord.getId(), hours, minutes, message);
                 sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, "успешно, дела за сегодня\n" + getUserRecords((long) userRecord.getId(), 0));
             } else {
                 log.info("user not found by telegram id {} need to reg first", user.getId());

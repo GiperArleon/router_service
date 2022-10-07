@@ -2,6 +2,7 @@ package com.router.api.telegram.bot.commands.admin;
 
 import com.router.api.telegram.bot.commands.OperationCommand;
 import com.router.clients.notif.SoapNotificatorClientFactory;
+import com.router.clients.soap.UserRoles;
 import com.router.tools.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Chat;
@@ -35,6 +36,12 @@ public class CheckNoTracksCommand extends OperationCommand {
             ru.soap.teamservice.User userRecord = response.getReturn();
 
             if(userRecord != null && userRecord.getUsername() != null) {
+                if(userRecord.getRole().getRId()< UserRoles.LEAD.ordinal()) {
+                    log.info("user with telegram id {} do not have enough rights to get notifications", user.getId());
+                    sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, NOT_ENOUGH_RIGHTS);
+                    return;
+                }
+
                 int days = Integer.parseInt(strings[0]);
                 if(days == 1) {
                     notificatorReportService.sendNotificationReportToLeads();
