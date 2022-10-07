@@ -14,9 +14,12 @@ public class BotTextConstants {
     public static final String NOT_ENOUGH_RIGHTS = "Не достатачно прав\n";
 
     public static final String VALIDATOR_OK = "OK";
+    public static final String VALIDATOR_ERROR = "Ошибка";
     public static final String VALIDATOR_NEGATIVE_TIME = "Отрицательные часы или минуты";
     public static final String VALIDATOR_MAX_MINUTES = "Максимальное значение для минут 60";
     public static final String VALIDATOR_MAX_TIME = "Нельзя работать более 24 часов в день";
+    public static final String VALIDATOR_MAX_TEXT_SIZE = "Максимум 50 символов";
+    public static final String VALIDATOR_NO_SPECIAL = "Используйте только буквы и цифры, не используйте спец символы";
 
     public static final String HELP =
             "Бот учета времени\n\n" +

@@ -37,6 +37,17 @@ public class RegCommand extends OperationCommand {
             return;
         }
 
+        String res = Utils.validateText(strings[0]);
+        if(!res.equals(VALIDATOR_OK)) {
+            sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, res);
+            return;
+        }
+        res = Utils.validateText(strings[1]);
+        if(!res.equals(VALIDATOR_OK)) {
+            sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, res);
+            return;
+        }
+
         try {
             FindUserByTelegramId findUserByTelegramId = new FindUserByTelegramId();
             findUserByTelegramId.setUserTelegramLogin(user.getId().toString());

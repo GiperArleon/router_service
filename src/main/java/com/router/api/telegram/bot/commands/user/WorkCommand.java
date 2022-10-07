@@ -36,6 +36,19 @@ public class WorkCommand extends OperationCommand {
             return;
         }
 
+        Integer hours = Integer.parseInt(strings[0]);
+        Integer minutes = Integer.parseInt(strings[1]);
+        String res = Utils.validateTime(hours, minutes);
+        if(!res.equals(VALIDATOR_OK)) {
+            sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, res);
+            return;
+        }
+        res = Utils.validateText(strings[2]);
+        if(!res.equals(VALIDATOR_OK)) {
+            sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, res);
+            return;
+        }
+
         try {
             FindUserByTelegramId findUserByTelegramId = new FindUserByTelegramId();
             findUserByTelegramId.setUserTelegramLogin(user.getId().toString());
@@ -46,13 +59,6 @@ public class WorkCommand extends OperationCommand {
                 String message = Arrays.stream(strings)
                         .skip(2)
                         .collect(Collectors.joining(" "));
-                Integer hours = Integer.parseInt(strings[0]);
-                Integer minutes = Integer.parseInt(strings[1]);
-                String res = Utils.validateTime(hours, minutes);
-                if(!res.equals(VALIDATOR_OK)) {
-                    sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, res);
-                    return;
-                }
                 restAccountantClient.postRecord(userRecord.getId(), hours, minutes, message);
                 sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), userName, "успешно, дела за сегодня\n" + getUserRecords((long) userRecord.getId(), 0));
             } else {
