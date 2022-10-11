@@ -10,7 +10,6 @@ import ru.soap.teamservice.FindUserByTelegramId;
 import ru.soap.teamservice.FindUserByTelegramIdResponse;
 import ru.soap.teamservice.Group;
 import ru.soap.teamservice.Role;
-
 import static com.router.api.telegram.bot.BotTextConstants.*;
 import static com.router.tools.Utils.getUserName;
 

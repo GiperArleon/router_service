@@ -2,14 +2,12 @@ package com.router.clients.rest;
 
 import com.router.clients.rest.model.TimeRecord;
 import lombok.extern.slf4j.Slf4j;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.router.clients.rest.RestRequestUrls.*;
 
 @Slf4j

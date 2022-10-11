@@ -2,6 +2,7 @@ package com.router.api.telegram.messager;
 
 import lombok.extern.slf4j.Slf4j;
 import javax.ws.rs.core.UriBuilder;
+import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -10,18 +11,21 @@ import static com.router.tools.PropertyReader.PROPERTIES;
 
 @Slf4j
 public class TelegramNotifier {
+    HttpClient client = HttpClient.newBuilder()
+            .connectTimeout(Duration.ofSeconds(5))
+            .version(HttpClient.Version.HTTP_2)
+            .build();
 
     public boolean sendMessage(String CHAT_ID, String TOKEN, String message) {
-        HttpClient client = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(5))
-                .version(HttpClient.Version.HTTP_2)
-                .build();
 
         UriBuilder builder = UriBuilder
                 .fromUri(PROPERTIES.getProperties().get("telegram.api.url"))
                 .path("/{token}/sendMessage")
                 .queryParam("chat_id", CHAT_ID)
                 .queryParam("text", message);
+
+        URI uri = builder.build("bot" + TOKEN);
+        log.info(uri.toString());
 
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()

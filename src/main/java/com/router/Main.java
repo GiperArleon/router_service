@@ -3,6 +3,7 @@ package com.router;
 import com.router.api.soap.notification.NotifyServiceImpl;
 import com.router.api.soap.sender.SenderServiceImpl;
 import com.router.api.telegram.bot.Bot;
+import com.router.api.telegram.bot.TelegramBotFactory;
 import com.router.api.telegram.messager.TelegramMessageSender;
 import com.router.api.telegram.messager.TelegramMessageSenderFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -27,15 +28,15 @@ public class Main {
             Endpoint endpoint2 = Endpoint.create(new SenderServiceImpl());
             endpoint2.publish("http://localhost:8076/senderNotify");
 
-            String BOT_NAME = PROPERTIES.getProperties().get("telegram.api.user");
-            String BOT_TOKEN = PROPERTIES.getProperties().get("telegram.api.token");
             String DEV_ID = PROPERTIES.getProperties().get("telegram.developer.id");
             TelegramMessageSender telegramMessageSender = TelegramMessageSenderFactory.getTelegramMessageSender();
-
+            Bot bot = TelegramBotFactory.getTelegramBot();
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-            botsApi.registerBot(new Bot(BOT_NAME, BOT_TOKEN));
+            botsApi.registerBot(bot);
+
             if(!telegramMessageSender.sendNotificationById(DEV_ID, BOT_STARTED_MESSAGE))
                 log.error("error in sending start message to dev id {}", DEV_ID);
+
         } catch(Throwable e) {
             log.error(e.toString());
         }
