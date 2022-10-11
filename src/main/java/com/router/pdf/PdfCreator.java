@@ -14,8 +14,9 @@ public class PdfCreator {
             document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(pdfPath));
             document.open();
+            String baseDirectory = System.getProperty("user.dir");
 
-            BaseFont bf = BaseFont.createFont("./fonts/consola.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            BaseFont bf = BaseFont.createFont(baseDirectory + "/fonts/consola.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             Font font = new Font(bf, 14, Font.NORMAL);
 
             String[] str = text.split("\n");
